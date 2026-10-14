@@ -3,16 +3,22 @@ import { Effect } from 'effect'
 export { UrlRequest } from './urlRequest.js'
 
 /** Pushes a new URL to browser history and triggers Foldkit's URL change handling. */
-export const pushUrl = (url: string): Effect.Effect<void> =>
+export const pushUrl = (
+  url: string,
+  state: unknown = {},
+): Effect.Effect<void> =>
   Effect.sync(() => {
-    window.history.pushState({}, '', url)
+    window.history.pushState(state, '', url)
     window.dispatchEvent(new CustomEvent('foldkit:urlchange'))
   })
 
 /** Replaces the current URL in browser history and triggers Foldkit's URL change handling. */
-export const replaceUrl = (url: string): Effect.Effect<void> =>
+export const replaceUrl = (
+  url: string,
+  state: unknown = {},
+): Effect.Effect<void> =>
   Effect.sync(() => {
-    window.history.replaceState({}, '', url)
+    window.history.replaceState(state, '', url)
     window.dispatchEvent(new CustomEvent('foldkit:urlchange'))
   })
 
